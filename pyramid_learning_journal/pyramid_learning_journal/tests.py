@@ -4,6 +4,14 @@ import transaction
 from pyramid import testing
 
 
+'''
+Test ideas:
+Test list view response - pass dummy request
+
+Test list view response has proper content
+
+'''
+
 def dummy_request(dbsession):
     return testing.DummyRequest(dbsession=dbsession)
 
