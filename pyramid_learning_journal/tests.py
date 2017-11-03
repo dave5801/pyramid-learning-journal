@@ -13,7 +13,11 @@ Test list view response has proper content
 '''
 
 def dummy_request(dbsession):
-    return testing.DummyRequest(dbsession=dbsession)
+    """Test for Dummy Request."""
+    from pyramid_learning_journal.views.default import list_views
+    request = testing.DummyRequest()
+    response = list_views(request)
+    assert isinstance(response, Response)
 
 
 class BaseTest(unittest.TestCase):
