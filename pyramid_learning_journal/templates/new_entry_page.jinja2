@@ -1,0 +1,14 @@
+{% extends "index.jinja2" %}
+
+{% block content %}
+<div id="new">This will be a text area creating a new entry</div>
+
+ <form>
+    <div class="form-group">
+      <label for="usr">New Entry</label>
+      <input type="text" class="form-control" id="usr" placeholder="The Most Amazing Journal Ever in History...probably!">
+    </div>
+  </form>
+  <button type="button" class="btn btn-primary">Make Entry</button>
+
+{% endblock %}

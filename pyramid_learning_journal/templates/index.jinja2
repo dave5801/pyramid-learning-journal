@@ -11,18 +11,16 @@
   <h1>Revel in the Awesomeness of my Journal</h1>
   <ul class="list-inline">
     <li><a href="/">Home - List of Journal Entries</a></li>
-    <li><a href="/detail_view">Single Entries</a></li>
-    <li><a href="/create_view">New Entry</a></li>
-    <li><a href="/update_view">Edit Existing Entry</a></li>
+    <li><a href="/single_page_view">Single Entries</a></li>
+    <li><a href="/new_entry_view">New Entry</a></li>
+    <li><a href="/edit_view">Edit Existing Entry</a></li>
   </ul>
 </div>
 
 <div id="home">This will contain a list of Entries and Date Created</div>
 
 <ul>
-{% for entry in entries %}
-  <li>{{ entry.title }}</li>
-{% endfor %}
+ {% block content %}{% endblock %}
  </ul>
 
 </body>

@@ -1,38 +1,38 @@
-# views.py
-# ...
-#from pyramid.renderers import render --> likely do this here.
-#import a data/data.py file - which will hold iterable data to be injected into html templates
+"""Views."""
+
 from pyramid.view import view_config
-import io
 import os
-from pyramid.response import Response
-
-''''
-list_view: for the list of journal entries
-detail_view: for a single journal entry
-create_view: for creating a new view
-update_view: for updating an existing view
-'''
-
-
 
 ENTRIES = [
-    {
-    'title': 'Entry 1',
-    'body': 'Text Goes Here',
-    'date': 'xxxx-xx-xx'
-    },
-    {
-    'title': 'Entry 2',
-    'body': 'Text Goes Here',
-    'date': 'xxxx-xx-xx'
-    }
+    {'title': 'Entry 1', 'body': 'Fought Ninjas', 'date': '11-SMarch-17'},
+    {'title': 'Entry 2', 'body': 'Awesome Stuff', 'date': '12-SMarch-17'},
+    {'title': 'Entry 3', 'body': 'Spiders!', 'date': '13-SMarch-17'},
 ]
 
 
-@view_config(route_name='list_view', renderer='../templates/index.jinja2')
+@view_config(route_name='list_view', renderer='../templates/journal_entries.jinja2')
 def list_view(request):
-    return {'entries': ENTRIES} # <--- notice, it returns an empty dictionary
+    """Display Journal Entries."""
+    return {'entries': ENTRIES}
+
+
+@view_config(route_name='single_page_view', renderer='../templates/single_page.jinja2')
+def single_page_view(request):
+    """Display Single Page Entries."""
+    return {}
+
+
+@view_config(route_name='new_entry_view', renderer='../templates/new_entry_page.jinja2')
+def new_entry_view(request):
+    """Display New Page Entries."""
+    return {}
+
+
+@view_config(route_name='edit_view', renderer='../templates/edit_page.jinja2')
+def edit_view(request):
+    """Display Edit Page."""
+    return {}
+
 
 #use {%block content%}To build blocks of html content {%end block%} --> may avoid repetition of html
 
