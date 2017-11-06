@@ -1,0 +1,30 @@
+<html>
+<head>
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="crossorigin="anonymous"></script>
+   
+
+</head>
+<body>
+    
+<div class="container">
+  <h1>Revel in the Awesomeness of my Journal</h1>
+  <ul class="list-inline">
+    <li><a href="/">Home - List of Journal Entries</a></li>
+    <li><a href="/single_page_view">Single Entries</a></li>
+    <li><a href="/new_entry_view">New Entry</a></li>
+    <li><a href="/edit_view">Edit Existing Entry</a></li>
+  </ul>
+</div>
+
+<div id="home">This will contain a list of Entries and Date Created</div>
+
+<ul>
+ {% block content %}{% endblock %}
+ </ul>
+
+</body>
+<footer>
+  <p>Contact Info Goes here - in the footer</p>
+</footer>
+</html>

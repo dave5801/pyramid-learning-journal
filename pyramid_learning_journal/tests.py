@@ -1,23 +1,19 @@
+"""This is the test class."""
+
 import unittest
 import transaction
-
 from pyramid import testing
 
 
-'''
-Test ideas:
-Test list view response - pass dummy request
-
-Test list view response has proper content
-
-'''
-
 def dummy_request(dbsession):
+    """Test for Dummy Requests."""
     return testing.DummyRequest(dbsession=dbsession)
 
 
 class BaseTest(unittest.TestCase):
+    """I don't know what this is for yet."""
     def setUp(self):
+        """Or this."""
         self.config = testing.setUp(settings={
             'sqlalchemy.url': 'sqlite:///:memory:'
         })
@@ -36,10 +32,12 @@ class BaseTest(unittest.TestCase):
         self.session = get_tm_session(session_factory, transaction.manager)
 
     def init_database(self):
+        """I guess this initializes a db."""
         from .models.meta import Base
         Base.metadata.create_all(self.engine)
 
     def tearDown(self):
+        """The reading was a little hazy."""
         from .models.meta import Base
 
         testing.tearDown()
@@ -48,8 +46,10 @@ class BaseTest(unittest.TestCase):
 
 
 class TestMyViewSuccessCondition(BaseTest):
+    """Test success conditions"""
 
     def setUp(self):
+        """haven't figured this out yet."""
         super(TestMyViewSuccessCondition, self).setUp()
         self.init_database()
 
@@ -58,16 +58,25 @@ class TestMyViewSuccessCondition(BaseTest):
         model = MyModel(name='one', value=55)
         self.session.add(model)
 
-    def test_passing_view(self):
-        from .views.default import my_view
-        info = my_view(dummy_request(self.session))
-        self.assertEqual(info['one'].name, 'one')
-        self.assertEqual(info['project'], 'pyramid_learning_journal')
+    def test_passing__journal_entries_to_listview(self):
+        """Test pass journal entries to list view."""
+        from .views.default import list_view
+
+        test_content = [{'title': 'Entry 1', 'body': 'Fought Ninjas', 'date': '11-SMarch-17'},
+        {'title': 'Entry 2', 'body': 'Awesome Stuff', 'date': '12-SMarch-17'}, 
+        {'title': 'Entry 3', 'body': 'Spiders!', 'date': '13-SMarch-17'}]
+
+        info = list_view(dummy_request(self.session))
+
+        for i in test_content:
+            self.assertTrue(i in info['entries'])
 
 
-class TestMyViewFailureCondition(BaseTest):
+class TestViewContents(BaseTest):
+    """Test contents of each view - when I have any, which I don't really at this point."""
 
-    def test_failing_view(self):
-        from .views.default import my_view
-        info = my_view(dummy_request(self.session))
-        self.assertEqual(info.status_int, 500)
+    def test_listview_contents(self):
+        """Test Confirms dictionary passed to list view."""
+        from pyramid_learning_journal.views.default import list_view
+        info = list_view(dummy_request(self.session))
+        self.assertIsNotNone(info)
