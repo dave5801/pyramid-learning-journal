@@ -1,7 +1,9 @@
 """Views."""
-
+from pyramid.httpexceptions import HTTPNotFound
 from pyramid.view import view_config
 import os
+from pyramid_learning_journal.models import Entries
+
 
 ENTRIES = [
     {'title': 'Entry 1', 'body': 'Fought Ninjas', 'date': '11-SMarch-17'},
