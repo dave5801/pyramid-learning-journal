@@ -1,19 +1,18 @@
 """Views."""
-
+from pyramid.httpexceptions import HTTPNotFound
 from pyramid.view import view_config
 import os
-
-ENTRIES = [
-    {'title': 'Entry 1', 'body': 'Fought Ninjas', 'date': '11-SMarch-17'},
-    {'title': 'Entry 2', 'body': 'Awesome Stuff', 'date': '12-SMarch-17'},
-    {'title': 'Entry 3', 'body': 'Spiders!', 'date': '13-SMarch-17'},
-]
+from pyramid_learning_journal.models import Entries
 
 
 @view_config(route_name='list_view', renderer='../templates/journal_entries.jinja2')
 def list_view(request):
     """Display Journal Entries."""
-    return {'entries': ENTRIES}
+    entries = request.dbsession.query(Entries).all()
+    return {
+    'entries': entries,
+    'route': 'list_view'
+    }
 
 
 @view_config(route_name='single_page_view', renderer='../templates/single_page.jinja2')
@@ -43,29 +42,3 @@ def edit_view(request):
 
 HERE = os.path.dirname(__file__)
 
-''''
-def list_view(request):
-    """Serve all journal entries on home page."""
-    with io.open(os.path.join(HERE, '../templates/index.html')) as file:
-        imported_html = file.read()
-    return Response(imported_html)
-
-def detail_view(request):
-    """Serve details of single page."""
-    with io.open(os.path.join(HERE, '../templates/single_page.html')) as file:
-        imported_html = file.read()
-    return Response(imported_html)
-
-def create_view(request):
-    """Serve create new page."""
-    with io.open(os.path.join(HERE, '../templates/new_entry.html')) as file:
-        imported_html = file.read()
-    return Response(imported_html)
-
-def update_view(request):
-    """Serve edit entry page."""
-    with io.open(os.path.join(HERE, '../templates/edit.html')) as file:
-        imported_html = file.read()
-    return Response(imported_html)
-# ...
-'''
