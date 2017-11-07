@@ -24,9 +24,9 @@ class Entries(Base):
     id = Column(Integer, primary_key=True)
     title = Column(Text)
     body = Column(Text)
-    creation_date = Column(DateTime, default=datetime.datetime.utcnow)
+    creation_date = Column(DateTime, default=datetime.datetime.now())
 
     def __repr__(self):
-        return '<Entry: {}>'.format(self.title)
+        return '<Entries: {}>'.format(self.title)
 
 Index('my_index', MyModel.name, unique=True, mysql_length=255)

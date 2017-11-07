@@ -4,18 +4,28 @@ from pyramid.view import view_config
 import os
 from pyramid_learning_journal.models import Entries
 
-
+'''
 ENTRIES = [
     {'title': 'Entry 1', 'body': 'Fought Ninjas', 'date': '11-SMarch-17'},
     {'title': 'Entry 2', 'body': 'Awesome Stuff', 'date': '12-SMarch-17'},
     {'title': 'Entry 3', 'body': 'Spiders!', 'date': '13-SMarch-17'},
 ]
-
-
+'''
+'''
 @view_config(route_name='list_view', renderer='../templates/journal_entries.jinja2')
 def list_view(request):
     """Display Journal Entries."""
     return {'entries': ENTRIES}
+'''
+
+@view_config(route_name='list_view', renderer='../templates/journal_entries.jinja2')
+def list_view(request):
+    """Display Journal Entries."""
+    entries = request.dbsession.query(Entries).all()
+    return {
+    'entries': entries,
+    'route': 'list_view'
+    }
 
 
 @view_config(route_name='single_page_view', renderer='../templates/single_page.jinja2')
