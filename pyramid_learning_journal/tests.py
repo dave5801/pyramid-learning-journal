@@ -2,7 +2,11 @@
 import pytest
 from pyramid import testing
 import transaction
+import random
 import datetime
+from faker import Faker
+
+
 
 from pyramid_learning_journal.models import (
     Entries,
@@ -10,6 +14,17 @@ from pyramid_learning_journal.models import (
 )
 
 from pyramid_learning_journal.models.meta import Base
+
+
+FAKE_FACTORY = Faker()
+TITLES = ["Warlocks", "T-Rex Fights President Lincoln", "Robot Vampires", "Angry Political Rants"]
+ENTRIES_LIST = [Entries(
+    title=random.choice(TITLES),
+    body=FAKE_FACTORY.text(100),
+    creation_date=datetime.datetime.now()
+    ) for i in range(20)]
+
+
 
 @pytest.fixture(scope="session")
 def configuration(request):
@@ -131,3 +146,10 @@ def test_list_view_returns_count_matching_database(dummy_request):
     from pyramid_learning_journal.views.default import list_view
     response = list_view(dummy_request)
     assert len(response['entries']) == 0
+
+
+@pytest.fixture
+def add_models(dummy_request):
+    """Add fake contents to test db."""
+    dummy_request.dbsession.add_all(ENTRIES_LIST)
+
