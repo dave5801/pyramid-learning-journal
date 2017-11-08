@@ -1,3 +1,6 @@
+"""Data Model."""
+
+
 import datetime
 
 from sqlalchemy import (
@@ -11,13 +14,6 @@ from sqlalchemy import (
 from .meta import Base
 
 
-class MyModel(Base):
-    __tablename__ = 'models'
-    id = Column(Integer, primary_key=True)
-    name = Column(Text)
-    value = Column(Integer)
-
-
 class Entries(Base):
     """Class for journal entries."""
     __tablename__ = 'entries'
@@ -28,5 +24,3 @@ class Entries(Base):
 
     def __repr__(self):
         return '<Entries: {}>'.format(self.title)
-
-Index('my_index', MyModel.name, unique=True, mysql_length=255)
