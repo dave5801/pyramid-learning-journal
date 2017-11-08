@@ -53,6 +53,7 @@ def db_session(configuration, request):
     request.addfinalizer(teardown)
     return session
 
+
 @pytest.fixture
 def dummy_request(db_session):
     """Instantiate a fake HTTP Request, complete with a database session.
@@ -63,13 +64,36 @@ def dummy_request(db_session):
 
 
 def test_list_view_returns_dict(dummy_request):
-    """List view returns Response Object."""
+    """Test List view returns Response Object."""
     from pyramid_learning_journal.views.default import list_view
     response = list_view(dummy_request)
     assert isinstance(response, dict)
 
+
+def test_single_page_view_returns_dict(dummy_request):
+    """Test Single Page view returns Response Object."""
+    from pyramid_learning_journal.views.default import single_page_view
+    response = single_page_view(dummy_request)
+    assert isinstance(response, dict)
+
+
+def test_new_entry_view_returns_dict(dummy_request):
+    """Test Single Page view returns Response Object."""
+    from pyramid_learning_journal.views.default import new_entry_view
+    response = new_entry_view(dummy_request)
+    assert isinstance(response, dict)
+
+
+def test_edit_view_returns_dict(dummy_request):
+    """Test Single Page view returns Response Object."""
+    from pyramid_learning_journal.views.default import edit_view
+    response = edit_view(dummy_request)
+    assert isinstance(response, dict)
+
+
 @pytest.fixture()
 def testapp():
+    """Test fixture for creating an app"""
     from pyramid_learning_journal import main
     app = main({})
     from webtest import TestApp
@@ -77,17 +101,21 @@ def testapp():
 
 
 def test_layout_root(testapp):
+    """Test get response from layout view."""
     response = testapp.get('/', status=200)
     html = response.html
     assert 'Contact Info Goes here - in the footer' in html.find("footer").text
 
+
 def test_root_contents(testapp):
+    """Test response code from layout root."""
     response = testapp.get('/', status=200)
     html = response.html
     assert 3 == len(html.findAll(class_="journal_entries"))
 
-def test_model_gets_added(db_session):
 
+def test_model_gets_added(db_session):
+    """Test add data model to db."""
     assert len(db_session.query(Entries).all()) == 0
     model = Entries(
         title="Fake Title",
@@ -97,7 +125,9 @@ def test_model_gets_added(db_session):
     db_session.add(model)
     assert len(db_session.query(Entries).all()) == 1
 
+
 def test_list_view_returns_count_matching_database(dummy_request):
+    """Test response matches db contents."""
     from pyramid_learning_journal.views.default import list_view
     response = list_view(dummy_request)
     assert len(response['entries']) == 0
