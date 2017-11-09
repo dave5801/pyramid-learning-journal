@@ -33,12 +33,4 @@ def edit_view(request):
     return {}
 
 
-#use {%block content%}To build blocks of html content {%end block%} --> may avoid repetition of html
-
-##Likely return data structures to be rendered in templates here.
-
-#html that goes on every page goes on layout.jinja2
-# new html goes into file_name.jinja2 {% extends "layout.jinja2" %}
-
 HERE = os.path.dirname(__file__)
-

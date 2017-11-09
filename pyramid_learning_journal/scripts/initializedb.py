@@ -1,3 +1,5 @@
+"""Initialize db."""
+
 import os
 import sys
 import transaction
@@ -18,7 +20,7 @@ from ..models import (
     get_session_factory,
     get_tm_session,
     )
-from ..models import MyModel
+
 
 
 def usage(argv):
@@ -54,7 +56,3 @@ def main(argv=sys.argv):
             )
             entry_models.append(new_entry)
         dbsession.add_all(entry_models)
-
-
-
-
