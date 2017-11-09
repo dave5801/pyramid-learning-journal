@@ -1,4 +1,5 @@
 """Views."""
+import datetime
 from pyramid.httpexceptions import HTTPNotFound
 from pyramid.view import view_config
 import os
@@ -20,12 +21,19 @@ def single_page_view(request):
     """Display Single Page Entries."""
     return {}
 
-
 @view_config(route_name='new_entry_view', renderer='../templates/new_entry_page.jinja2')
 def new_entry_view(request):
-    """Display New Page Entries."""
+    """Display New Page Entries.""" 
+    if request.method == "POST":
+        form_data = request.POST
+        new_entry = Entries(
+                title=form_data['title'],
+                body=form_data['body'],
+                creation_date=datetime.datetime.now()
+            )
+        request.dbsession.add(new_entry)
+        return {}
     return {}
-
 
 @view_config(route_name='edit_view', renderer='../templates/edit_page.jinja2')
 def edit_view(request):
