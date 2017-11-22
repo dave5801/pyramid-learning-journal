@@ -16,26 +16,22 @@ def list_view(request):
         'route': 'list_view',
     }
 
-'''
-@view_config(route_name='single_page_view', renderer='../templates/single_page.jinja2')
-def single_page_view(request):
-    """Display Single Page Entries."""
-    request.matchdict()
-    return {}
-    https://codefellows.github.io/sea-python-401d7/lectures/pyramid_day3.html
-'''
 
 @view_config(route_name='single_page_view', renderer='../templates/single_page.jinja2')
 def single_page_view(request):
     """Display Single Page Entries."""
     the_id = int(request.matchdict['id'])
     entry = request.dbsession.query(Entries).get(the_id)
-    return {
-        "id": entry.id,
-        "title": entry.title,
-        "body": entry.body,
-        "creation_date": entry.creation_date
-        }
+    
+    if entry:
+        return {
+            "id": entry.id,
+            "title": entry.title,
+            "body": entry.body,
+            "creation_date": entry.creation_date
+            }
+    else:
+        raise HTTPNotFound
 
 
 
@@ -57,6 +53,22 @@ def new_entry_view(request):
 @view_config(route_name='edit_view', renderer='../templates/edit_page.jinja2')
 def edit_view(request):
     """Display Edit Page."""
+
+    entry_id = int(request.matchdict['id'])
+    entry = request.dbsession.query(Entries).get(entry_id)
+    if not entry:
+        raise HTTPNotFound
+    if request.method == "GET":
+        return {
+            'entry': entry.to_dict()
+        }
+    if request.method == "POST":
+        entry.title = request.POST['title']
+        entry.body = request.POST['body']
+        entry.creation_date = datetime.datetime.now()
+        request.dbsession.add(entry)
+        request.dbsession.flush()
+        return HTTPFound(request.route_url('list_view'))
     return {}
 
 
