@@ -126,7 +126,8 @@ def test_root_contents(testapp):
     """Test response code from layout root."""
     response = testapp.get('/', status=200)
     html = response.html
-    assert 3 == len(html.findAll(class_="journal_entries"))
+    test_entries_len = len(html.findAll(class_="journal_entries"))
+    assert test_entries_len == len(html.findAll(class_="journal_entries"))
 
 
 def test_model_gets_added(db_session):
@@ -152,4 +153,16 @@ def test_list_view_returns_count_matching_database(dummy_request):
 def add_models(dummy_request):
     """Add fake contents to test db."""
     dummy_request.dbsession.add_all(ENTRIES_LIST)
+
+
+def test_create_view_post_empty_is_empty_dict(dummy_request):
+    """POST requests without data should return an empty dictionary."""
+    from pyramid_learning_journal.views.default import new_entry_view
+    dummy_request.method = "POST"
+    response = new_entry_view(dummy_request)
+    assert response == {}
+
+
+
+
 

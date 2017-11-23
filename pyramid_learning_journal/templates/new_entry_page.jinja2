@@ -3,12 +3,15 @@
 {% block content %}
 <div id="new">This will be a text area creating a new entry</div>
 
- <form>
+ <form method="POST">
     <div class="form-group">
-      <label for="usr">New Entry</label>
-      <input type="text" class="form-control" id="usr" placeholder="The Most Amazing Journal Ever in History...probably!">
+      <label for="title">New Entry</label>
+      <input type="text" name="title" class="form-control"  placeholder="Title Goes Here" required>
+      <label for="body">New Entry</label>
+      <input type="text" name="body" class="form-control"  placeholder="Literally, The Most Amazing Journal Ever in History...probably!" required>
     </div>
+    <input type="submit" value="Make Entry">
   </form>
-  <button type="button" class="btn btn-primary">Make Entry</button>
+  
 
 {% endblock %}

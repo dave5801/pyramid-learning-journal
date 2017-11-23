@@ -3,19 +3,14 @@
 {% block content %}
 <h1>Old words of Wisdom - that I wrote</h1>
 
-<form>
+<form method="POST">
     <div class="form-group">
-      <label for="edits">Make Edits Here:</label>
-      <textarea class="form-control" rows="5" id="edits"
-        placeholder="This is some more stuff I wrote on 32 October 2017" 
-    
-      ></textarea>
+      <label for="title">Edit Entry</label>
+      <input type="text" name="title" value="{{entry.title}}" required>
+      <label for="body">New Entry</label>
+      <input type="text" name="body" value="{{entry.body}}" required>
     </div>
+    <input type="submit" value="Save Entry">
   </form>
 
-<div>Some cool developer</div>
-
-<div>An historic date time group that's formatted correctly</div>
-
-<button type="button" class="btn btn-primary">Make Edits</button>
 {% endblock %}

@@ -2,16 +2,14 @@
 
 {% block content %}
 
-<div id="entries">This will show a single Entry</div>
 
-<h1>Something Profound Learning Experience</h1>
 
-<div>I called a bunch of APIs, used a bunch of frameworks, using a popular programming language
-to do something that makes cool enough for your company. 
+<div>
+<h2>{{ title }}</h2>
+<p>{{ body }}</p>
+<p>{{ creation_date }}</p>
 </div>
 
-<div>Please Hire me already. I'm awesome</div>
-
-<div>32 October 2017</div>
+<a href="{{ request.route_url('edit_view', id=id)}}">Edit</a>
 
 {% endblock %}
