@@ -5,7 +5,14 @@
 <div id="home">This will contain a list of Entries and Date Created</div>
 
 {% for entry in entries %}
-  <li class="journal_entries" a href="{{ request.route_url('single_page_view', id=entry.id) }}">{{ entry.title }} {{ entry.body }} {{ entry.creation_date }}</li>
+
+    <div>
+        <h2>{{ entry.title }}</h2>
+        <p>{{ entry.body }}</p>
+        <p>{{ entry.creation_date }}</p>
+        <a href="{{ request.route_url('single_page_view', id=entry.id)}}">Details</a>
+    </div>
+
 {% endfor %}
 
 {% endblock %}

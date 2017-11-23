@@ -2,11 +2,14 @@
 
 {% block content %}
 
-{{title}}
 
-{{body}}
 
-{{creation_date}}
+<div>
+<h2>{{ title }}</h2>
+<p>{{ body }}</p>
+<p>{{ creation_date }}</p>
+</div>
 
+<a href="{{ request.route_url('edit_view', id=id)}}">Edit</a>
 
 {% endblock %}
